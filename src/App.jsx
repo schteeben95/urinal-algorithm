@@ -5,6 +5,7 @@ import UrinalDisplay from './components/UrinalDisplay';
 import ResultsPanel from './components/ResultsPanel';
 import SciencePanel from './components/SciencePanel';
 import Footer from './components/Footer';
+import Modal from './components/Modal';
 import { findBestUrinal } from './urinalAlgorithm';
 
 const LOADING_MESSAGES = [
@@ -27,6 +28,8 @@ function App() {
   const [result, setResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
+  const [showMiddlemistModal, setShowMiddlemistModal] = useState(false);
+  const [showAdversarialModal, setShowAdversarialModal] = useState(false);
 
   // Recalculate whenever configuration changes with artificial delay for comedic effect
   useEffect(() => {
@@ -99,27 +102,24 @@ function App() {
 
   const showAdversarialWarning = isAdversarialConfig();
 
+  // Trigger modals when easter eggs are detected
+  useEffect(() => {
+    if (isMiddlemistConfig) {
+      setShowMiddlemistModal(true);
+    }
+  }, [isMiddlemistConfig]);
+
+  useEffect(() => {
+    if (showAdversarialWarning) {
+      setShowAdversarialModal(true);
+    }
+  }, [showAdversarialWarning]);
+
   return (
     <div className="min-h-screen bg-institutional-50 flex flex-col">
       <Header />
 
       <main className="flex-grow max-w-6xl w-full mx-auto px-4 py-8">
-        {/* Easter Egg: Middlemist Configuration */}
-        {isMiddlemistConfig && (
-          <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-900 p-4 mb-6 rounded-r-lg">
-            <p className="text-sm">
-              <strong>🔬 HISTORICAL CONFIGURATION DETECTED</strong>
-            </p>
-            <p className="text-sm mt-2">
-              You have recreated the experimental setup from Middlemist, Knowles & Matter (1976) — the foundational
-              study of lavatory proxemics published in the <em>Journal of Personality and Social Psychology</em>.
-            </p>
-            <p className="text-xs mt-2 opacity-75">
-              Expected effect: 75% increase in micturition onset delay. Recommendation: Position 1 or 3 (maintain maximum buffer).
-            </p>
-          </div>
-        )}
-
         <ConfigurationPanel
           urinalCount={urinalCount}
           onUrinalCountChange={handleUrinalCountChange}
@@ -136,29 +136,52 @@ function App() {
           onToggleOccupied={handleToggleOccupied}
         />
 
-        {/* Easter Egg: Adversarial Configuration */}
-        {showAdversarialWarning && (
-          <div className="bg-red-100 border-l-4 border-red-500 text-red-900 p-4 mb-6 rounded-r-lg">
-            <p className="text-sm">
-              <strong>😰 ADVERSARIAL CONFIGURATION DETECTED</strong>
-            </p>
-            <p className="text-sm mt-2">
-              This arrangement appears designed to maximise discomfort. If you encounter this in the wild, consider:
-            </p>
-            <ul className="text-xs mt-2 ml-4 space-y-1">
-              <li>• The possibility of deliberate psychological warfare</li>
-              <li>• Waiting for improved conditions</li>
-              <li>• Lifestyle changes that reduce bathroom frequency</li>
-            </ul>
-          </div>
-        )}
-
         <ResultsPanel result={result} isLoading={isLoading} loadingMessage={loadingMessage} />
 
         <SciencePanel />
       </main>
 
       <Footer />
+
+      {/* Easter Egg Modals */}
+      <Modal
+        isOpen={showMiddlemistModal}
+        onClose={() => setShowMiddlemistModal(false)}
+        type="info"
+      >
+        <div className="text-yellow-900">
+          <p className="text-lg font-bold mb-3">
+            🔬 HISTORICAL CONFIGURATION DETECTED
+          </p>
+          <p className="text-sm mb-3">
+            You have recreated the experimental setup from Middlemist, Knowles & Matter (1976) — the foundational
+            study of lavatory proxemics published in the <em>Journal of Personality and Social Psychology</em>.
+          </p>
+          <p className="text-xs opacity-75">
+            Expected effect: 75% increase in micturition onset delay. Recommendation: Position 1 or 3 (maintain maximum buffer).
+          </p>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={showAdversarialModal}
+        onClose={() => setShowAdversarialModal(false)}
+        type="danger"
+      >
+        <div className="text-red-900">
+          <p className="text-lg font-bold mb-3">
+            😰 ADVERSARIAL CONFIGURATION DETECTED
+          </p>
+          <p className="text-sm mb-3">
+            This arrangement appears designed to maximise discomfort. If you encounter this in the wild, consider:
+          </p>
+          <ul className="text-sm ml-4 space-y-1">
+            <li>• The possibility of deliberate psychological warfare</li>
+            <li>• Waiting for improved conditions</li>
+            <li>• Lifestyle changes that reduce bathroom frequency</li>
+          </ul>
+        </div>
+      </Modal>
     </div>
   );
 }

@@ -14,7 +14,7 @@ function Urinal({ position, isOccupied, score, isRecommended, onClick }) {
   const scoreLabel = score ? getScoreLabel(score.composite) : null;
 
   return (
-    <div className="flex flex-col items-center group relative flex-shrink-0" style={{ height: '220px', minWidth: '110px' }}>
+    <div className="flex flex-col items-center group relative flex-shrink-0" style={{ height: '220px', minWidth: '80px' }}>
       {/* Recommendation badge - absolutely positioned */}
       <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 h-6">
         {isRecommended && !isOccupied && (
@@ -38,7 +38,7 @@ function Urinal({ position, isOccupied, score, isRecommended, onClick }) {
           }
         >
           {/* SVG Urinal */}
-          <div className="w-20 h-24 md:w-24 md:h-28 transform group-hover:scale-105 transition-transform">
+          <div className="w-16 h-20 sm:w-20 sm:h-24 md:w-24 md:h-28 transform group-hover:scale-105 transition-transform">
             <UrinalIcon
               isOccupied={isOccupied}
               isRecommended={isRecommended}
@@ -56,7 +56,7 @@ function Urinal({ position, isOccupied, score, isRecommended, onClick }) {
       </div>
 
       {/* Status label and score - absolutely positioned below */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center" style={{ width: '100px' }}>
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center" style={{ width: '80px' }}>
         {isOccupied ? (
           <div className="text-xs font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded border border-gray-300 inline-block">
             OCCUPIED
@@ -66,7 +66,7 @@ function Urinal({ position, isOccupied, score, isRecommended, onClick }) {
             <div className="text-xs text-institutional-500 font-mono mb-0.5">
               ────
             </div>
-            <div className="text-2xl font-bold text-institutional-900 font-mono">
+            <div className="text-xl sm:text-2xl font-bold text-institutional-900 font-mono">
               {score.composite}
             </div>
             <div className={`text-xs font-bold mt-0.5 ${scoreLabel.color} whitespace-nowrap`}>
@@ -95,7 +95,7 @@ export default function UrinalDisplay({
       </h2>
 
       <div className="w-full mb-4 overflow-x-auto">
-        <div className={`flex items-center gap-4 px-6 py-8 ${totalUrinals > 7 ? 'min-w-min' : 'min-w-fit justify-center'}`}>
+        <div className={`flex items-center gap-2 sm:gap-4 px-3 sm:px-6 py-8 ${totalUrinals > 7 ? 'min-w-min' : 'min-w-fit justify-center'}`}>
           {/* Left wall */}
           <WallPattern side="left" className="w-6 h-48 rounded-l-lg flex-shrink-0" />
 

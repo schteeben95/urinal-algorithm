@@ -4,8 +4,9 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="border-2 border-institutional-600 rounded-lg p-6 bg-institutional-900">
           <div className="text-center space-y-3">
-            <div className="text-xs font-mono text-institutional-400 mb-4">
-              ─────────────────────────────────────────────────────────────
+            <div className="text-xs font-mono text-institutional-400 mb-4 overflow-hidden">
+              <div className="hidden sm:block">─────────────────────────────────────────────────────────────</div>
+              <div className="sm:hidden">───────────────────────</div>
             </div>
 
             <p className="text-sm">
@@ -22,8 +23,9 @@ export default function Footer() {
               Optimised for field deployment. Discrete consultation recommended.
             </p>
 
-            <div className="text-xs font-mono text-institutional-400 mt-4 mb-4">
-              ─────────────────────────────────────────────────────────────
+            <div className="text-xs font-mono text-institutional-400 mt-4 mb-4 overflow-hidden">
+              <div className="hidden sm:block">─────────────────────────────────────────────────────────────</div>
+              <div className="sm:hidden">───────────────────────</div>
             </div>
 
             <p className="text-xs opacity-50">
